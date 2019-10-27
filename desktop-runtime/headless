@@ -1,0 +1,7 @@
+export DISPLAY=:0
+
+# Start virtual framebuffer.
+Xvfb "${DISPLAY}" &
+
+# Wait until Xvfb is ready.
+while xdpyinfo &> /dev/null; do sleep 0.1; done
