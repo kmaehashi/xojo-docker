@@ -10,6 +10,6 @@ RUN cd /tmp && \
     dpkg -i "xojo${XOJO_VERSION}.deb" && \
     ln -snf xojo${XOJO_VERSION} /opt/xojo/xojo
 
-COPY xojo-accept-eula .Xojo.Xojo /
+COPY .Xojo.Xojo /root
 
 CMD ["/opt/xojo/xojo/Xojo"]
