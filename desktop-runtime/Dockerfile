@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 LABEL maintainer "Kenichi Maehashi <webmaster@kenichimaehashi.com>"
 
 RUN perl -pi.bak -e 's!http://(archive|security)\.ubuntu\.com/ubuntu/!mirror://mirrors.ubuntu.com/mirrors.txt!g' /etc/apt/sources.list && \
