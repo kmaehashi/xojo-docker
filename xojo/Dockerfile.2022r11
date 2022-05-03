@@ -1,0 +1,16 @@
+ARG base_image="kmaehashi/xojo-desktop-runtime:ubuntu20.04"
+FROM ${base_image}
+
+ENV XOJO_VERSION        2022r11
+ENV XOJO_VERSION_DIR    2022r1.1
+ENV XOJO_CHECKSUM       771f1f1d4c038b87546c6347f81b9862cd4eaf66fe364bd1403b2c1e4c33e1e5
+
+COPY xojo${XOJO_VERSION}.deb /tmp
+RUN cd /tmp && \
+    echo "${XOJO_CHECKSUM}  xojo${XOJO_VERSION}.deb" | sha256sum -cw --quiet - && \
+    dpkg -i "xojo${XOJO_VERSION}.deb" && \
+    ln -snf "xojo${XOJO_VERSION_DIR}" /opt/xojo/xojo
+
+COPY .Xojo.Xojo /root
+
+CMD ["/opt/xojo/xojo/Xojo"]
