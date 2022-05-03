@@ -1,20 +1,13 @@
 # Xojo on Docker
 
 Docker images to run [Xojo](https://xojo.com/) IDE and desktop apps.
-
-## Images
-
-All images are hosted on [Docker Hub](https://hub.docker.com/r/kmaehashi/xojo-docker).
-
-* `desktop-runtime`: image to run desktop apps
-* `xojo-{VERSION}`: image to run Xojo IDE
-    * These images are based on `desktop-runtime` image.
+Images are hosted on [Docker Hub](https://hub.docker.com/r/kmaehashi/xojo-docker).
 
 ## Usage
 
 ### Via X11 Forwarding
 
-First connect to the Docker host with SSH X11 forwarding enabled.
+First connect to a Linux host running Docker with SSH X11 forwarding enabled.
 
 ```sh
 ssh -Y host
@@ -28,7 +21,7 @@ docker run \
     --net host \
     --env DISPLAY \
     --volume ~/.Xauthority:/root/.Xauthority \
-    kmaehashi/xojo-docker:xojo-2019r2
+    kmaehashi/xojo-docker:xojo2022r11-ubuntu20.04
 ```
 
 Notes:
@@ -46,14 +39,12 @@ docker run \
     --net host \
     --env DISPLAY \
     --volume ~/.Xauthority:/root/.Xauthority \
-    kmaehashi/xojo-docker:xojo-2019r2 \
+    kmaehashi/xojo-docker:xojo2022r11-ubuntu20.04 \
     "/opt/xojo/xojo/Extras/Remote Debugger Desktop/Remote Debugger Desktop 64-Bit/Remote Debugger Desktop"
 ```
 
-TODO verify how to use the debugger
-
 To run your application instead of the IDE, specify the application path as an argument.
-You can use `desktop-runtime` image, which provides smaller footprint than `xojo-{VERSION}` images.
+You can use [`desktop-runtime` image](https://hub.docker.com/r/kmaehashi/xojo-desktop-runtime), which provides smaller footprint than `xojo-{VERSION}` images.
 
 ```sh
 docker run \
@@ -62,7 +53,7 @@ docker run \
     --env DISPLAY \
     --volume ~/.Xauthority:/root/.Xauthority \
     --volume /local/path/to/app_dir:/container/path/to/app_dir \
-    kmaehashi/xojo-docker:desktop-runtime \
+    kmaehashi/xojo-desktop-runtime:ubuntu20.04 \
     /container/path/to/app_dir/app
 ```
 
@@ -86,7 +77,7 @@ Before starting your application you need to source the [`headless`](desktop-run
 docker run \
     --rm \
     --volume /local/path/to/app_dir:/container/path/to/app_dir \
-    kmaehashi/xojo-docker:desktop-runtime \
+    kmaehashi/xojo-desktop-runtime:ubuntu20.04 \
     bash -c 'source /headless; /container/path/to/app_dir/app'
 ```
 
@@ -122,13 +113,9 @@ End Function
 
 Debug-run your application inside the Docker container, using the project source code and Xojo IDE.
 
-TODO
-
 ```sh
 cat _EOF_ | nc -U /tmp/XojoIDE
 OpenFile("/path/to/project")
 DoCommand("RunApp")
 _EOF_
 ```
-
-(You must have read and accept EULA of Xojo IDE before using `xojo-accept-eula` command)
