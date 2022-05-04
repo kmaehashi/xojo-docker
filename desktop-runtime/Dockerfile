@@ -8,7 +8,7 @@ RUN perl -pi.bak -e 's!http://(archive|security)\.ubuntu\.com/ubuntu/!mirror://m
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 RUN apt-get -y update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install xvfb netcat-openbsd && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install xvfb netcat-openbsd python3-pip && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 COPY headless /
